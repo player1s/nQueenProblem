@@ -17,12 +17,21 @@ public class Board {
     public Board(int size) {
         this.size = size;
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 1; i <= size; i++) {
+            for (int j = 1; j <= size; j++) {
                 Field field = new Field(i,j,false, false);
                 allFields.add(field);
             }
         }
+    }
+
+    public Field getField(int posX, int posY)
+    {
+        for (int i = 0; i < allFields.size(); i++) {
+            if(allFields.get(i).getPosX() == posX && allFields.get(i).getPosY() == posY)
+                return allFields.get(i);
+        }
+        return null;
     }
 
     public int countDestroyed()
@@ -62,8 +71,10 @@ public class Board {
         queen.getField().setOccupied(true);
 
         for (int i = 0; i < allFields.size(); i++) {
-            if(allFields.get(i).getPosX() == field.getPosX() && allFields.get(i).getPosY() == field.getPosY())
-                queen.getField().setDestroyed(true);
+            if(allFields.get(i).getPosX() == field.getPosX() || allFields.get(i).getPosY() == field.getPosY()) {
+                allFields.get(i).setDestroyed(true);
+                //System.out.println("field on " + allFields.get(i).getPosX() + " " + allFields.get(i).getPosY() + " is destroyed");
+            }
         }
     }
 

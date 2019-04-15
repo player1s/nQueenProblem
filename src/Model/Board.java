@@ -55,4 +55,16 @@ public class Board {
         return occupiedCount;
     }
 
+    public void placeQueen(Field field)
+    {
+        Queen queen = new Queen(field);
+
+        queen.getField().setOccupied(true);
+
+        for (int i = 0; i < allFields.size(); i++) {
+            if(allFields.get(i).getPosX() == field.getPosX() && allFields.get(i).getPosY() == field.getPosY())
+                queen.getField().setDestroyed(true);
+        }
+    }
+
 }

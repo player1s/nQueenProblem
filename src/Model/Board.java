@@ -19,7 +19,7 @@ public class Board {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                Field field = new Field(i,j,false);
+                Field field = new Field(i,j,false, false);
                 allFields.add(field);
             }
         }
@@ -38,6 +38,21 @@ public class Board {
         }
 
         return destroyedCount;
+    }
+
+    public int countOccupied()
+    {
+
+        int occupiedCount = 0;
+
+        for (int i = 0; i < allFields.size(); i++) {
+
+            if(allFields.get(i).isOccupied())
+                occupiedCount++;
+
+        }
+
+        return occupiedCount;
     }
 
 }

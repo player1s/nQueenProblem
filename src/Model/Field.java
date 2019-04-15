@@ -4,6 +4,7 @@ public class Field {
     private int posX;
     private int posY;
     private boolean isDestroyed;
+    private boolean isOccupied;
 
     public int getPosX() {
         return posX;
@@ -25,13 +26,22 @@ public class Field {
         return isDestroyed;
     }
 
+    public boolean isOccupied() {
+        return isOccupied;
+    }
+
+    public void setOccupied(boolean occupied) {
+        isOccupied = occupied;
+    }
+
     public void setDestroyed(boolean destroyed) {
         isDestroyed = destroyed;
     }
 
-    public Field(int posX, int posY, boolean isDestroyed) {
+    public Field(int posX, int posY, boolean isDestroyed, boolean isOccupied) {
         this.posX = posX;
         this.posY = posY;
         this.isDestroyed = isDestroyed;
+        this.isOccupied = isOccupied;
     }
 }

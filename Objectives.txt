@@ -1,0 +1,12 @@
+Purpose:
+write a program that finds the possible solutions for the queen problem on a nXn size board
+
+The program should yield these results:
+boardsize, solution amount
+4-2
+5-10
+6-4
+7-40
+8-92
+9-352
+etc.......

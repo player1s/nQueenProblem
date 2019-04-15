@@ -6,8 +6,9 @@ public class Main {
 
         long startTime = System.currentTimeMillis();
 
-        Board board = new Board(8);
-        board.placeQueen(board.getField(5,5));
+        Board board = new Board(3);
+        board.placeQueen(board.getField(1,1));
+        board.placeQueen(board.getField(3,2));
         System.out.println("Amount of destroyed fields: " + board.countDestroyed());
 
         long stopTime = System.currentTimeMillis();

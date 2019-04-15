@@ -65,8 +65,12 @@ public class Board {
         return occupiedCount;
     }
 
-    public void placeQueen(Field field)
+    public int placeQueen(Field field)
     {
+        if(field.isDestroyed()){
+            System.out.println("field is destroyed already, cant put queen to: " + field.getPosX() + " " + field.getPosY());
+            return 0;
+        }
         Queen queen = new Queen(field);
 
         queen.getField().setOccupied(true);
@@ -78,15 +82,16 @@ public class Board {
             }
         }
         collectDiagonals(field);
+        return 0;
     }
 
     public  ArrayList<Field> collectDiagonals(Field field)
     {
         ArrayList<Field> diagonals = new ArrayList<>();
 
-        for (int i = 1; i < size - 1; i++) {
+        for (int i = 1; i < size; i++) {
 
-            if(field.getPosY() + i <= size && field.getPosY() + i <= size )
+            if(field.getPosX() + i <= size && field.getPosY() + i <= size )
             {
                 diagonals.add(getField(field.getPosX() + i , field.getPosY() + i ));
                 getField(field.getPosX() + i , field.getPosY() + i ).setDestroyed(true);

@@ -65,24 +65,35 @@ public class Board {
         return occupiedCount;
     }
 
-    public int placeQueen(Field field)
+    public boolean placeQueen(Field field)
     {
         if(field.isDestroyed()){
             System.out.println("field is destroyed already, cant put queen to: " + field.getPosX() + " " + field.getPosY());
-            return 0;
+            return false;
         }
         Queen queen = new Queen(field);
 
         queen.getField().setOccupied(true);
 
+        collectDestroyedFields(field);
+        collectDiagonals(field);
+        return true;
+    }
+
+    public void removeQueen(Field field)
+    {
+        restoreFields(field);
+        restoreFieldsDiagonal(field);
+    }
+
+    public void collectDestroyedFields(Field field)
+    {
         for (int i = 0; i < allFields.size(); i++) {
             if(allFields.get(i).getPosX() == field.getPosX() || allFields.get(i).getPosY() == field.getPosY()) {
                 allFields.get(i).setDestroyed(true);
                 //System.out.println("field on " + allFields.get(i).getPosX() + " " + allFields.get(i).getPosY() + " is destroyed");
             }
         }
-        collectDiagonals(field);
-        return 0;
     }
 
     public  ArrayList<Field> collectDiagonals(Field field)
@@ -121,6 +132,56 @@ public class Board {
         }
 
         return diagonals;
+    }
+
+    public void restoreFields(Field field)
+    {
+        for (int i = 0; i < allFields.size(); i++) {
+            if(allFields.get(i).getPosX() == field.getPosX() || allFields.get(i).getPosY() == field.getPosY()) {
+                allFields.get(i).setDestroyed(false);
+                allFields.get(i).setOccupied(false);
+                //System.out.println("field on " + allFields.get(i).getPosX() + " " + allFields.get(i).getPosY() + " is destroyed");
+            }
+        }
+    }
+
+    public void restoreFieldsDiagonal(Field field)
+    {
+        for (int i = 1; i < size; i++) {
+
+            if(field.getPosX() + i <= size && field.getPosY() + i <= size )
+            {
+                getField(field.getPosX() + i , field.getPosY() + i ).setDestroyed(false);
+                //System.out.println(diagonals.get(diagonals.size()-1).getPosX() + " " + diagonals.get(diagonals.size()-1).getPosY() + " is added as a diagonal");
+            }
+
+            if(field.getPosX() - i > 0 && field.getPosY() - i > 0)
+            {
+                getField(field.getPosX() - i , field.getPosY() - i ).setDestroyed(false);
+                // System.out.println(diagonals.get(diagonals.size()-1).getPosX() + " " + diagonals.get(diagonals.size()-1).getPosY() + " is added as a diagonal");
+            }
+
+            if(field.getPosY() - i > 0 && field.getPosX() + i <= size)
+            {
+                getField(field.getPosX() + i , field.getPosY() - i ).setDestroyed(false);
+                // System.out.println(diagonals.get(diagonals.size()-1).getPosX() + " " + diagonals.get(diagonals.size()-1).getPosY() + " is added as a diagonal");
+            }
+
+            if(field.getPosX() - i > 0 && field.getPosY() + i <= size)
+            {
+                getField(field.getPosX() - i , field.getPosY() + i ).setDestroyed(false);
+                // System.out.println(diagonals.get(diagonals.size()-1).getPosX() + " " + diagonals.get(diagonals.size()-1).getPosY() + " is added as a diagonal");
+            }
+        }
+    }
+
+    public Field searchQueenOnLevel(int level)
+    {
+        for (int i = 0; i < level; i++) {
+            if(allFields.get(i).isOccupied())
+                return allFields.get(i);
+        }
+        return null;
     }
 
 }

@@ -4,12 +4,14 @@ public class Main {
 
     private static int level = 1;
     private static int solutions = 0;
+    private static long queensPlaced = 0;
+    private static long timesRolledBack = 0;
 
     public static void main(String[] args) {
 
         long startTime = System.currentTimeMillis();
 
-        Board board = new Board(4);
+        Board board = new Board(8);
         put(board);
 
         /*
@@ -21,6 +23,8 @@ public class Main {
         board.placeQueen(board.getField(3,3));
         board.drawCurrentBoard(board);
 */
+        System.out.println("Queens placed: " + queensPlaced);
+        //System.out.println("timesRolledBack: " + timesRolledBack);
         System.out.println("Amount of solutions: " + solutions);
 
         long stopTime = System.currentTimeMillis();
@@ -35,7 +39,8 @@ public class Main {
             for (int i = 1; i <= board.getSize(); i++) {
                 if (!board.getField(level, i).isDestroyed()) {
                     board.placeQueen(board.getField(level, i));
-                    //board.drawCurrentBoard(board);
+                    queensPlaced++;
+                    board.drawCurrentBoard(board);
                     //System.out.println("placed " + level + " queen");
 
                     if (!(level == board.getSize())) {
@@ -46,7 +51,7 @@ public class Main {
             }
 
             if (board.countOccupied() == board.getSize()) {
-                //board.drawCurrentBoard(board);
+                board.drawCurrentBoard(board);
                 solutions++;
                 board.removeLastQueen();
             }

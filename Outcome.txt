@@ -11,3 +11,38 @@ board size, number of solutions found, time (ms),
 11, 2680, 2753
 12, 14200, 17966
 so on
+
+the way it works:
+when you place a queen, the program calculates which fields will be threatened.
+there it flips a boolean, and from there on the field wont be considered.
+when a dead end is met, it takes back the last queen, restores fields, and continues with the next possible position.
+dead end is defined as: the program cant place a queen on the next column, or a solution was discovered. Such as:
+. = free field
+q = queen
+| = threatened field
+(it has fancy generated console text)
+
+-
+ | | q | | | 
+ q | | | | | 
+ | | | | | . 
+ | | | | . | 
+ | q | | | | 
+ | | | q | | 
+-
+-
+ | | q | | | 
+ q | | | | | 
+ | | | | | | 
+ | | | | q | 
+ | q | | | | 
+ | | | q | | 
+-
+-
+ | | | . | | 
+ q | | | | | 
+ | | q | | | 
+ | | | | . . 
+ | q | | | | 
+ | | | . | | 
+-

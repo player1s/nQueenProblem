@@ -9,7 +9,7 @@ public class Main {
 
         long startTime = System.currentTimeMillis();
 
-        Board board = new Board(10);
+        Board board = new Board(4);
         put(board);
 
         /*
@@ -46,7 +46,7 @@ public class Main {
             }
 
             if (board.countOccupied() == board.getSize()) {
-                board.drawCurrentBoard(board);
+                //board.drawCurrentBoard(board);
                 solutions++;
                 board.removeLastQueen();
             }

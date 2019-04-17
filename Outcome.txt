@@ -1,0 +1,13 @@
+I have written a program that uses brute force to find all possible solutions.
+it completes the tasks in these times
+board size, number of solutions found, time (ms),
+4, 2, 15
+5, 10, 22
+6, 4, 22
+7, 40, 27
+8, 92, 50
+9, 352, 124
+10, 724, 491
+11, 2680, 2753
+12, 14200, 17966
+so on

@@ -30,6 +30,7 @@ public class Board {
     public Field getField(int posX, int posY)
     {
         for (int i = 0; i < allFields.size(); i++) {
+
             if(allFields.get(i).getPosX() == posX && allFields.get(i).getPosY() == posY)
                 return allFields.get(i);
 
@@ -90,7 +91,7 @@ public class Board {
             restoreFieldsDiagonal(queenList.get(queenList.size() - 1).getField());
             queenList.remove(queenList.size() - 1);
 
-            //redestroy fields that would be destroyed anyways
+            //redestroy fields that would be destroyed by non removed queens
             for (int i = 0; i < queenList.size(); i++) {
                 collectDestroyedFields(queenList.get(i).getField());
                 collectDiagonals(queenList.get(i).getField());
@@ -103,7 +104,6 @@ public class Board {
         for (int i = 0; i < allFields.size(); i++) {
             if(allFields.get(i).getPosX() == field.getPosX() || allFields.get(i).getPosY() == field.getPosY()) {
                 allFields.get(i).setDestroyed(true);
-                //System.out.println("field on " + allFields.get(i).getPosX() + " " + allFields.get(i).getPosY() + " is destroyed");
             }
         }
     }
@@ -118,21 +118,18 @@ public class Board {
             {
                 diagonals.add(getField(field.getPosX() + i , field.getPosY() + i ));
                 getField(field.getPosX() + i , field.getPosY() + i ).setDestroyed(true);
-                //System.out.println(diagonals.get(diagonals.size()-1).getPosX() + " " + diagonals.get(diagonals.size()-1).getPosY() + " is added as a diagonal");
             }
 
             if(field.getPosX() - i > 0 && field.getPosY() - i > 0)
             {
                 diagonals.add(getField(field.getPosX() - i , field.getPosY() - i ));
                 getField(field.getPosX() - i , field.getPosY() - i ).setDestroyed(true);
-               // System.out.println(diagonals.get(diagonals.size()-1).getPosX() + " " + diagonals.get(diagonals.size()-1).getPosY() + " is added as a diagonal");
             }
 
             if(field.getPosY() - i > 0 && field.getPosX() + i <= size)
             {
                 diagonals.add(getField(field.getPosX() + i , field.getPosY() - i ));
                 getField(field.getPosX() + i , field.getPosY() - i ).setDestroyed(true);
-               // System.out.println(diagonals.get(diagonals.size()-1).getPosX() + " " + diagonals.get(diagonals.size()-1).getPosY() + " is added as a diagonal");
             }
 
             if(field.getPosX() - i > 0 && field.getPosY() + i <= size)

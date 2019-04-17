@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Board {
     private int size;
     private ArrayList<Field> allFields = new ArrayList();
+    private ArrayList<Queen> queenList = new ArrayList();
+
 
     public int getSize() {
         return size;
@@ -72,6 +74,7 @@ public class Board {
             return false;
         }
         Queen queen = new Queen(field);
+        queenList.add(queen);
 
         queen.getField().setOccupied(true);
 
@@ -80,10 +83,19 @@ public class Board {
         return true;
     }
 
-    public void removeQueen(Field field)
+    public void removeLastQueen()
     {
-        restoreFields(field);
-        restoreFieldsDiagonal(field);
+        if(queenList.size() != 0) {
+            restoreFields(queenList.get(queenList.size() - 1).getField());
+            restoreFieldsDiagonal(queenList.get(queenList.size() - 1).getField());
+            queenList.remove(queenList.size() - 1);
+
+            //redestroy fields that would be destroyed anyways
+            for (int i = 0; i < queenList.size(); i++) {
+                collectDestroyedFields(queenList.get(i).getField());
+                collectDiagonals(queenList.get(i).getField());
+            }
+        }
     }
 
     public void collectDestroyedFields(Field field)
@@ -175,13 +187,41 @@ public class Board {
         }
     }
 
-    public Field searchQueenOnLevel(int level)
+    public Queen getLastQueen()
     {
-        for (int i = 0; i < level; i++) {
-            if(allFields.get(i).isOccupied())
-                return allFields.get(i);
+        return queenList.get(queenList.size()-1);
+    }
+
+    public void drawCurrentBoard(Board board)
+    {
+        System.out.println("-");
+        for (int i = 1; i <= board.getSize(); i++) {
+            for (int j = 1; j <= board.getSize(); j++) {
+                System.out.print(" ");
+                if(getField(j,i).isOccupied())
+                    System.out.print("q");
+
+                else if(getField(j,i).isDestroyed())
+                    System.out.print("|");
+
+                else
+                {
+                    System.out.print(".");
+                }
+            }
+
+            System.out.print(" ");
+            System.out.println("");
         }
-        return null;
+        System.out.println("-");
+    }
+
+    public void clearBoard()
+    {
+        while(queenList.size() != 0)
+        {
+            removeLastQueen();
+        }
     }
 
 }

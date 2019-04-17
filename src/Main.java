@@ -9,8 +9,18 @@ public class Main {
 
         long startTime = System.currentTimeMillis();
 
-        Board board = new Board(4);
+        Board board = new Board(10);
         put(board);
+
+        /*
+        board.drawCurrentBoard(board);
+        board.placeQueen(board.getField(2,3));
+        board.drawCurrentBoard(board);
+        board.removeLastQueen();
+        board.drawCurrentBoard(board);
+        board.placeQueen(board.getField(3,3));
+        board.drawCurrentBoard(board);
+*/
         System.out.println("Amount of solutions: " + solutions);
 
         long stopTime = System.currentTimeMillis();
@@ -21,25 +31,32 @@ public class Main {
     private static int put(Board board)
     {
 
-        for (int i = 1; i <= board.getSize(); i++) {
-            if(!board.getField(level, i).isDestroyed()) {
-                board.placeQueen(board.getField(level, i));
 
-                if(!(level == board.getSize())) {
-                    level++;
-                    put(board);
+            for (int i = 1; i <= board.getSize(); i++) {
+                if (!board.getField(level, i).isDestroyed()) {
+                    board.placeQueen(board.getField(level, i));
+                    //board.drawCurrentBoard(board);
+                    //System.out.println("placed " + level + " queen");
+
+                    if (!(level == board.getSize())) {
+                        level++;
+                        put(board);
+                    }
                 }
             }
-        }
 
-        if(board.countOccupied() == board.getSize())
-        {
-            solutions++;
-        }
+            if (board.countOccupied() == board.getSize()) {
+                board.drawCurrentBoard(board);
+                solutions++;
+                board.removeLastQueen();
+            }
 
-        board.removeQueen(board.searchQueenOnLevel(level));
+            board.removeLastQueen();
 
-        level--;
-        return 0;
+            level--;
+
+            return 0;
+
+
     }
 }
